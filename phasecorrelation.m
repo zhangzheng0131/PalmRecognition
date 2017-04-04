@@ -34,17 +34,29 @@ end
 if isempty(coldis)||isempty(rawdis)
     coldis=0;
     rawdis=0;
-%else if coldist/size(ff,2)>0.95 || rawdist/size(ff,1)>0.95 %bandwise problem
-%    coldis=0;
-%    rawdis=0;
-else
+end
+if((coldis<=0.5*size(ff,2))&&(rawdis<=0.5*size(ff,1)))
     coldis=coldis-1;
     rawdis=rawdis-1;
 end
+if((coldis>0.5*size(ff,2))&&(rawdis<=0.5*size(ff,1))) %4 kinds of conditions 
+        coldis=coldis-1-size(ff,2);
+        rawdis=rawdis-1;
+end
+ if((coldis<=0.5*size(ff,2))&&(rawdis>0.5*size(ff,1)))
+        coldis=coldis-1;
+        rawdis=rawdis-1-size(ff,1);
+end
+if((coldis>0.5*size(ff,2))&&(rawdis>0.5*size(ff,1)))
+        coldis=coldis-1-size(ff,2);
+        rawdis=rawdis-1-size(ff,1);
+end
+
 
 %if(mod(coldis+))
 score=max(max(ff));
 %figure(11);
 %mesh(ff);                 %%显示最大相关位置
-end
+    end
+    
 

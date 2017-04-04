@@ -27,6 +27,9 @@ Yi=cf.A*exp(-(xi-cf.mu).^2/(2*cf.sigma^2))*ymax;
 
 
 LocalScore=cf.A*1*ymax;
+if(LocalScore>=1)
+    LocalScore=1;
+end
 %% plot data
 %figure(10);
 %hold on
