@@ -89,6 +89,7 @@ W=28;
 %figure(2);
 %imshow(J0);
 %hold on
+ff=[];
 for izz=1:size(p01,2)
    for jzz=1:size(p02,2)  
     f1=I0(max(p01(1,izz)-W/2,1):min(p01(1,izz)+W/2-1,size(I0,1)),max(1,p02(1,jzz)-W/2):min(p02(1,jzz)+W/2-1,size(I0,2)));
@@ -129,14 +130,19 @@ for izz=1:size(p01,2)
         %end
     end
     end   % boundary condition
+    
     [ff1,BLPOCsco0(izz,jzz),col0dis(izz,jzz),raw0dis(izz,jzz)]=phasecorrelation(f1,g1);      %setp 5
     if(isnan(ff1))
-        ff(:,:,(izz-1)*size(p01,2)+jzz)=0.01*eye(size(ff1,1));
+        if(jzz==1)
+            ff=zeros(size(f1));
+        else
+              ff(:,:,(izz-1)*size(p01,2)+jzz)=mean(ff,3);
+        end
     else
         ff(:,:,(izz-1)*size(p01,2)+jzz)=ff1;
     end
-    izz;
-    jzz;
+    izz
+    jzz
     
     q01(izz,jzz)=2*q11(izz,jzz)+raw0dis(izz,jzz); %periodic extension
     q02(izz,jzz)=2*q12(izz,jzz)+col0dis(izz,jzz);
@@ -180,7 +186,7 @@ LocalScore=GoassFit(x,y);
 
 MScore=0.5*(BLPOCscore+LocalScore);
     if((MScore>=1)||isnan(MScore))
-        MScore=0.10;
+        MScore=LocalScore;
     end
 end
                                         
