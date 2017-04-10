@@ -1,6 +1,7 @@
-load('imposterMScore1.mat');
+function []=CalRoc()
+load('imposterMScore.mat');
 load('MScore.mat');
-MScore=as.MScore;
+MScore=MScore;
 %negsample=zeros(length(imposterMScore),1);
 negsample=(-1)*ones(length(imposterMScore),1);
 %possample=ones(length(MScore),1);
@@ -10,11 +11,12 @@ label=[possample' negsample'];
 %plotroc(label,data);
 %[tpr,fpr,thresholds] = roc(label,data);
 [tpr,fpr] = roczz(label',data');
-figure(100);
+h=figure(100);
 semilogx(fpr,tpr);
+f=['v1_' num2str(i) '.png'];
+saveas(h,f);
+grid on;
 figure(101);
 plot(fpr,tpr);
- xlable('FALSE POSITIVE RATE');
- ylable('TRUE POSITIVE RATE');
-       title('RECEIVER OPERATING CHARACTERISTIC (ROC)');
 grid on;
+end

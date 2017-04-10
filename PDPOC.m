@@ -141,8 +141,8 @@ for izz=1:size(p01,2)
     else
         ff(:,:,(izz-1)*size(p01,2)+jzz)=ff1;
     end
-    izz
-    jzz
+    izz;
+    jzz;
     
     q01(izz,jzz)=2*q11(izz,jzz)+raw0dis(izz,jzz); %periodic extension
     q02(izz,jzz)=2*q12(izz,jzz)+col0dis(izz,jzz);
@@ -158,6 +158,8 @@ end
 %% average BLPOC function
 fftemp=mean(ff,3);
 BLPOCscore=max(max(fftemp));
+temp=sort((max(fftemp)));
+BLPOCscore=sum(temp(length(temp)-1:length(temp)));
 %%%%% Location-based Score
 for izz=1:size(q01,2)
     for jzz=1:size(q02,2)-1
